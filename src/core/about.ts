@@ -31,9 +31,9 @@ function showAbout(){
   aboutCheck().then(function(r){
     var b=d.querySelector('.ab');b.textContent='';
     function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-    if(r.ok===false||!r.info){b.appendChild(el('div','bad','This copy of ExtChat has been modified: the developer signature is invalid. Get an original build from the developer.'));return}
+    if(r.ok===false||!r.info){b.appendChild(el('div','bad','This copy of ExtAIChat has been modified: the developer signature is invalid. Get an original build from the developer.'));return}
     var i=r.info;
-    b.appendChild(el('h3','','ExtChat'));
+    b.appendChild(el('h3','','ExtAIChat'));
     if(i.t)b.appendChild(el('div','',i.t));
     function kv(k,v){var w=el('div','kv');w.appendChild(el('span','',k));w.appendChild(el('span','',v));b.appendChild(w)}
     if(i.n)kv('Developer',i.n);

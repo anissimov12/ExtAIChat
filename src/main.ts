@@ -57,10 +57,10 @@
     .then(function(){return VAULT.open()})
     .then(function(){return seq(APP)})
     .catch(function(e){
-      console.error("ExtChat:",e);
+      console.error("ExtAIChat:",e);
       var d=document.createElement("div");
       d.style.cssText="padding:16px;font:14px sans-serif;color:#f66";
-      d.textContent="ExtChat failed to start: "+(e&&e.message||e);
+      d.textContent="ExtAIChat failed to start: "+(e&&e.message||e);
       document.body.appendChild(d);
     });
 })();

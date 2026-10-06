@@ -70,7 +70,7 @@ function drag(h,k){
 /* version badge: tiny v{APPVER} in the bottom-right corner of the app */
 (function(){
   var v=document.createElement('div');
-  v.id='ver';v.textContent='v'+APPVER;v.title='ExtChat version';
+  v.id='ver';v.textContent='v'+APPVER;v.title='ExtAIChat version';
   document.getElementById('app').appendChild(v);
 })();
 

@@ -1,8 +1,8 @@
 {
-  "name": "extchat",
+  "name": "extaichat",
   "version": "0.1.0",
   "private": true,
-  "description": "ExtChat",
+  "description": "ExtAIChat",
   "scripts": {
     "build": "node tools/build.mjs",
     "watch": "tsc -p tsconfig.json --watch"

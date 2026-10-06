@@ -106,7 +106,7 @@ var VAULT=(function(){
   function unlock(m,ks,block){
     return new Promise(function(res){
       var d=document.createElement('dialog');d.id='dU';
-      d.innerHTML='<div class="dh"><b>ExtChat is locked</b></div><div class="db"><div class="muted">Enter the passphrase to unlock it</div>'+
+      d.innerHTML='<div class="dh"><b>ExtAIChat is locked</b></div><div class="db"><div class="muted">Enter the passphrase to unlock it</div>'+
         '<input id="uP" type="password" placeholder="Passphrase" autocomplete="current-password" aria-label="Passphrase" spellcheck="false">'+
         '<div class="muted bad" id="uE"></div><div class="row"><button class="btn" id="uG" type="button">Unlock</button><button class="btn sec" id="uR" type="button" style="margin-left:auto">Erase all data…</button></div></div>';
       document.body.appendChild(d);
@@ -123,14 +123,14 @@ var VAULT=(function(){
             var raw=null;try{raw=localStorage.getItem(k)}catch(e){}
             if(raw==null)return;
             if(raw.indexOf('enc1:')!==0){MEM[k]=raw;return}
-            return dec(key,raw,k).then(function(t){MEM[k]=t},function(){console.warn('ExtChat: could not decrypt '+k)});
+            return dec(key,raw,k).then(function(t){MEM[k]=t},function(){console.warn('ExtAIChat: could not decrypt '+k)});
           }));
         }).then(function(){KEY=key;d.close();d.remove();res()},function(){work=false;G.disabled=false;E.textContent='Wrong passphrase.';P.select()});
       }
       G.onclick=go;
       P.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go()}});
       d.querySelector('#uR').onclick=function(){
-        if(!confirm('Erase ALL ExtChat data in this browser (chats, providers, API keys, settings)? This cannot be undone.'))return;
+        if(!confirm('Erase ALL ExtAIChat data in this browser (chats, providers, API keys, settings)? This cannot be undone.'))return;
         keys().concat([META]).forEach(function(k){try{localStorage.removeItem(k)}catch(e){}});
         location.reload();
       };
@@ -149,7 +149,7 @@ var VAULT=(function(){
       ks.forEach(function(k){try{MEM[k]=localStorage.getItem(k)}catch(e){}});
       if(!can())return Promise.resolve();
       return V.enable(PASSPHASE,true).catch(function(e){
-        console.warn('ExtChat: automatic storage encryption failed',e);
+        console.warn('ExtAIChat: automatic storage encryption failed',e);
       });
     }
 

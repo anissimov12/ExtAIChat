@@ -81,7 +81,7 @@ function run(c){
   inp.value='';grow();hidePal();
   if(c==='settings')openSettings();
   else if(c==='about')showAbout();
-  else if(c==='version'){var s=document.createElement('span');s.textContent='ExtChat v'+APPVER;$('st').appendChild(s);setTimeout(function(){if(s.parentNode)s.remove()},4000);L('cfg','version: ExtChat v'+APPVER)}
+  else if(c==='version'){var s=document.createElement('span');s.textContent='ExtAIChat v'+APPVER;$('st').appendChild(s);setTimeout(function(){if(s.parentNode)s.remove()},4000);L('cfg','version: ExtAIChat v'+APPVER)}
   else if(c==='clear'){var ch=chat();if(ch&&!busy){ch.msgs=[];ch.title='New chat';saveH();render();renderList();L('chat','chat cleared')}}
   else return false;
   return true;

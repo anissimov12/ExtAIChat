@@ -73,13 +73,13 @@ function openSettings(t){
       '<input id="ip" type="password" placeholder="Passphrase (if the file is encrypted)" autocomplete="off" aria-label="Import passphrase">'+
       '<div class="row"><button class="btn sec" data-a="imp" type="button">Import…</button><span class="muted" data-ds="imp"></span></div>'+
       '<div class="sec">Storage encryption · <b class="'+(on?'':'bad')+'">'+(on?'on':'off')+'</b></div>'+
-      '<div class="muted">ExtChat automatically encrypts everything it keeps in this browser - providers, API keys, chats and settings - with AES-256-GCM. The first encryption uses the built-in default passphrase. If you change it below, the new passphrase is required on the next launch and is never stored.</div>'+
+      '<div class="muted">ExtAIChat automatically encrypts everything it keeps in this browser - providers, API keys, chats and settings - with AES-256-GCM. The first encryption uses the built-in default passphrase. If you change it below, the new passphrase is required on the next launch and is never stored.</div>'+
       (cr?'':'<div class="muted bad">WebCrypto is unavailable here - open the app over HTTPS or localhost.</div>')+
       '<input id="v1" type="password" placeholder="New passphrase (min 8 characters)" autocomplete="new-password" aria-label="New passphrase"'+(cr?'':' disabled')+'>'+
       '<input id="v2" type="password" placeholder="Repeat passphrase" autocomplete="new-password" aria-label="Repeat new passphrase"'+(cr?'':' disabled')+'>'+
       '<div class="row"><button class="btn" data-a="vch" type="button"'+(cr?'':' disabled')+'>Change passphrase</button><button class="btn sec" data-a="vlk" type="button">Lock now</button></div>'+
       '<div class="muted" data-ds="v"></div>'+
-      '<div class="sec">About</div><div class="row"><button class="ghost" data-a="abt" type="button">About ExtChat · /about</button></div>'+
+      '<div class="sec">About</div><div class="row"><button class="ghost" data-a="abt" type="button">About ExtAIChat · /about</button></div>'+
     '</div>';
   }
   function ds(k,m,bad){var s=d.querySelector('[data-ds="'+k+'"]');if(s){s.textContent=m;s.style.color=bad?'var(--err)':''}}
@@ -100,15 +100,15 @@ function openSettings(t){
     try{
       var o=JSON.parse(JSON.stringify(S)),keys=$('xk').checked,pw=$('xp').value;
       o.providers.forEach(function(p){delete p.caps;delete p.capsAt;if(!keys)p.key=''});
-      var out={app:'ExtChat',type:'settings',v:1,at:new Date().toISOString(),settings:o};
+      var out={app:'ExtAIChat',type:'settings',v:1,at:new Date().toISOString(),settings:o};
       if($('xc').checked)out.chats=listed();
       if(pw){
         if(!VAULT.can())throw new Error('encryption needs WebCrypto (HTTPS or localhost)');
         ds('exp','Encrypting…');
-        out={app:'ExtChat',type:'settings',v:1,enc:await VAULT.seal(JSON.stringify(out),pw)};
+        out={app:'ExtAIChat',type:'settings',v:1,enc:await VAULT.seal(JSON.stringify(out),pw)};
       }
       var blob=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');
-      a.href=u;a.download='extchat-settings-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();
+      a.href=u;a.download='extaichat-settings-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();
       setTimeout(function(){URL.revokeObjectURL(u)},4000);
       ds('exp','Exported'+(keys&&!pw?' · API keys are in plain text':''));L('cfg','settings exported');
     }catch(er){ds('exp',er.message,1)}
@@ -120,7 +120,7 @@ function openSettings(t){
       try{
         if(f.size>60*1048576)throw new Error('file is too large');
         var o;try{o=JSON.parse(await f.text())}catch(e){throw new Error('not a valid JSON file')}
-        if(!o||o.app!=='ExtChat'||o.type!=='settings')throw new Error('not an ExtChat settings file');
+        if(!o||o.type!=='settings'||(o.app!=='ExtAIChat'&&o.app!=='ExtChat'))throw new Error('not an ExtAIChat settings file');
         if(o.enc){
           var pw=$('ip').value;
           if(!pw)throw new Error('the file is encrypted - enter its passphrase above, then choose it again');

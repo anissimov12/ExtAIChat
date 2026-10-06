@@ -7,7 +7,7 @@
 async function gen(){
   var c=chat(),p=prov();
   if(!p||!S.model){L('err','provider or model not selected');err('Set up a provider (/settings) and choose a model (/model) first.');return}
-  if(ABOK===false){L('err','build integrity check failed');err('This copy of ExtChat has been modified: the developer signature is invalid, so sending is disabled. Get an original build.');return}
+  if(ABOK===false){L('err','build integrity check failed');err('This copy of ExtAIChat has been modified: the developer signature is invalid, so sending is disabled. Get an original build.');return}
   var model=S.model,th=thinkNow(),w=mk('assistant','',null,model),b=w.querySelector('.m'),stick=atBottom();
   var tk=null,tkb=null,tkN=null,tkUser=false,tkPref=S.tkopen===true;
   function tkShow(){

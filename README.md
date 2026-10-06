@@ -14,7 +14,7 @@
 
 ## Purpose
 
-The extension is designed for interaction with LLMs through open and commercial HTTP APIs. Unlike the native solutions of individual providers, ExtChat acts as a **universal client**: a single interface is used to communicate with different services, while the list of configured services, their parameters, and access keys are stored locally on the user's machine.
+The extension is designed for interaction with LLMs through open and commercial HTTP APIs. Unlike the native solutions of individual providers, ExtAIChat acts as a **universal client**: a single interface is used to communicate with different services, while the list of configured services, their parameters, and access keys are stored locally on the user's machine.
 
 ## Capabilities
 
@@ -81,7 +81,7 @@ The assembled extension resides in the `site/` directory and is loaded into a Ge
 
 The project is developed on a voluntary basis, and any form of contribution is welcome. You may support the development in the following ways:
 
-- **Pull requests.** Bug fixes, refactoring, and new features are accepted through pull requests to the [project repository](https://github.com/anissimov12/ExtChat). Substantive changes are reviewed and merged by the maintainer.
+- **Pull requests.** Bug fixes, refactoring, and new features are accepted through pull requests to the [project repository](https://github.com/anissimov12/ExtAIChat). Substantive changes are reviewed and merged by the maintainer.
 - **Forks.** Creating a fork for your own experiments or derivative builds is encouraged; please observe the terms of the GPLv3 licence.
 - **Attribution.** Contributors whose changes are merged into the main branch are added to the built-in *About* dialog of the extension (`/about` command), so that their authorship is visible to every user.
 
