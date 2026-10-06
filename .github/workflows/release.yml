@@ -1,0 +1,78 @@
+# Build and Release
+# Triggered manually from the Actions tab ("Run workflow").
+
+name: Build and Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Pack site.zip
+        run: |
+          rm -f site.zip
+          zip -r site.zip site
+
+      - name: Compute checksums
+        run: |
+          echo "BUILD_DATE=$(date +%y%m%d)" >> "$GITHUB_ENV"
+          echo "SHORT_SHA=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+          {
+            echo 'SHA256<<EOF'
+            sha256sum site.zip | awk '{print $1}'
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+          {
+            echo 'SHA1<<EOF'
+            sha1sum site.zip | awk '{print $1}'
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+          {
+            echo 'MD5<<EOF'
+            md5sum site.zip | awk '{print $1}'
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${BUILD_DATE}-${GITHUB_RUN_NUMBER}"
+          NOTES=$(cat <<EOF
+          Compiled extension build from \`${GITHUB_REF_NAME}\` (commit ${SHORT_SHA}).
+
+          **Attachment:** \`site.zip\`
+
+          ### Checksums
+
+          | Algorithm | Value |
+          |---|---|
+          | SHA256 | \`${SHA256}\` |
+          | SHA1 | \`${SHA1}\` |
+          | MD5 | \`${MD5}\` |
+          EOF
+          )
+          gh release create "$TAG" site.zip \
+            --title "Build${BUILD_DATE}" \
+            --notes "$NOTES" \
+            --target "$GITHUB_SHA"
