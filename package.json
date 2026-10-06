@@ -1,0 +1,14 @@
+{
+  "name": "extchat",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ExtChat",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "watch": "tsc -p tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^5.9.0",
+    "typescript": "^7.0.2"
+  }
+}

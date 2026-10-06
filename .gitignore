@@ -1,0 +1,15 @@
+# build artifacts
+node*
+_old_root
+package-lock*
+
+# artifacts
+site/js/
+
+# private
+tools/about.key.json
+TODO
+
+# ai tools
+.pi*
+pi*

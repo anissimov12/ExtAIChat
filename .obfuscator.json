@@ -1,0 +1,17 @@
+{
+  "compact": true,
+  "controlFlowFlattening": true,
+  "controlFlowFlatteningThreshold": 0.75,
+  "deadCodeInjection": true,
+  "deadCodeInjectionThreshold": 0.4,
+  "stringArray": true,
+  "stringArrayEncoding": ["base64"],
+  "stringArrayThreshold": 1,
+  "splitStrings": true,
+  "splitStringsChunkLength": 8,
+  "simplify": true,
+  "renameGlobals": false,
+  "selfDefending": false,
+  "debugProtection": false,
+  "disableConsoleOutput": true
+}

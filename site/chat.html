@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#161616">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>ExtChat</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;450;500&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sb">
+    <nav class="tb" id="tb" role="tablist" aria-label="Sidebar">
+      <button class="ti on" type="button" role="tab" data-tab="chats" title="Chats" aria-label="Chats" aria-selected="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h13"/></svg></button>
+      <button class="ti" type="button" role="tab" data-tab="system" title="System" aria-label="System" aria-selected="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 21V13M5 9V3M12 21v-9M12 8V3M19 21v-5M19 12V3"/><path d="M2.5 13h5M9.5 8h5M16.5 16h5"/></svg></button>
+      <button class="ghost" id="nc" type="button" title="New chat (/new)">+ New</button>
+    </nav>
+    <div class="tp on" id="tpC" role="tabpanel"><div id="cl"></div></div>
+    <div class="tp" id="tpS" role="tabpanel">
+    <div class="rb">
+      <label>Prompt<textarea id="sys" rows="7" placeholder="You are a helpful assistant…" spellcheck="false"></textarea></label>
+      <div class="row"><span class="muted" id="sysn">0 chars</span><button class="ghost" id="syc" type="button" style="margin-left:auto">Clear</button></div>
+      <div class="sec">Presets</div>
+      <select id="spre" aria-label="Presets"></select>
+      <div class="row"><input id="spn" placeholder="Name to save as" aria-label="Preset name"><button class="btn sec" id="sps" type="button">Save</button><button class="ico" id="spd" type="button" title="Delete preset" aria-label="Delete preset"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="sec">Parameters</div>
+      <div class="grid">
+        <label>Temperature<input data-k="temp" type="number" step="0.1" min="0" max="2"></label>
+        <label>Top-p<input data-k="topp" type="number" step="0.05" min="0" max="1"></label>
+        <label>Top-k<input data-k="topk" type="number" step="1" min="0"></label>
+        <label>Max tokens<input data-k="max" type="number" step="1" min="1"></label>
+      </div>
+      <label class="chk"><input type="checkbox" id="stm"> Stream response</label>
+      <div class="row"><button class="btn sec" id="prs" type="button">Reset</button></div>
+      <div class="muted">Empty fields are not sent. Top-k is not supported by every API.</div>
+    </div>
+    </div>
+  </aside>
+  <div class="rz v" id="rsb" role="separator" aria-orientation="vertical" tabindex="0" title="Drag to resize · click to open/close"></div>
+  <div id="mn">
+    <header>
+      <button class="ico" id="mb" type="button" title="Chats (/chats)" aria-label="Chats"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h13"/></svg></button>
+      <button class="ctitle" id="ct" type="button" title="Rename chat" aria-label="Chat title">New chat</button>
+      <span id="st"></span>
+      <button class="ico" id="bs" type="button" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+    </header>
+    <div id="msgs" aria-live="polite"></div>
+    <div id="home"><div id="welcome" aria-hidden="true"></div>
+    <form id="f">
+      <div class="cmp">
+        <div id="atb" aria-label="Attachments"></div>
+        <textarea id="in" rows="1" placeholder="Message, or / for commands - paste or drop files" aria-label="Message"></textarea>
+        <div class="mrow" id="mrow">
+          <button class="ico" id="ba" type="button" aria-label="Attach files" title="Attach images or files"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5 12.3 20a4.6 4.6 0 0 1-6.5-6.5l8.7-8.7a3.1 3.1 0 0 1 4.4 4.4l-8.7 8.7a1.5 1.5 0 0 1-2.2-2.2l8.1-8.1"/></svg></button>
+          <span class="mgi"><button class="mchip" id="bm" type="button" title="Select model (search) - also /model">Select model</button><div class="fp" id="mm"></div></span>
+          <span class="mgi"><button class="mchip" id="bt" type="button" title="Thinking effort">Thinking: none</button><div class="fp" id="tm"></div></span>
+          <span class="tok" id="tkv" aria-label="Tokens: sent and received"></span>
+          <button class="btn" id="send" type="submit"></button>
+        </div>
+      </div>
+    </form>
+    <div id="pal"></div>
+    </div>
+    <div class="rz h" id="rlg" role="separator" aria-orientation="horizontal" tabindex="0" title="Drag to resize · click to open/close"></div>
+    <section id="lg"><div class="sh"><b>Logs</b><button class="ghost" id="lc" type="button">Clear</button></div><div id="lgb"></div></section>
+  </div>
+  </div>
+<dialog id="dS"></dialog>
+<input type="file" id="fp" multiple hidden>
+<div id="dz"><span>Drop images or files</span></div>
+<script src="js/main.js"></script>
+</body>
+</html>
