@@ -7,7 +7,7 @@
    background dims and a starfield fades in (staggered per-star twinkle, slow
    drift, occasional meteors). Any input wakes it up with a fast smooth fade-out. */
 /* MARK: setup */
-var IDLE_MS=2000,idleT=null;
+var IDLE_MS=10000,idleT=null;
 var starBox=document.createElement('div');starBox.id='stars';starBox.setAttribute('aria-hidden','true');
 var idleDim=document.createElement('div');idleDim.id='idleDim';idleDim.setAttribute('aria-hidden','true');
 /* both layers live inside #mn, behind the message content (z-index 0), and are
@@ -30,7 +30,7 @@ fitIdle();
 /* generate the starfield once: ~90 stars + 3 meteors, all randomized via CSS vars:
    --o peak opacity, --d stagger delay, --t twinkle period, --a twinkle phase, --c tint */
 (function(){
-  var n=999,f=document.createDocumentFragment();
+  var n=90,f=document.createDocumentFragment();
   for(var i=0;i<n;i++){
     var s=document.createElement('i');
     var sz=Math.random()<.85?(Math.random()*.9+.6):(Math.random()*1.2+1.8);

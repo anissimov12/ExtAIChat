@@ -19,3 +19,9 @@ function fitUI(){
 }
 addEventListener('resize',function(){clearTimeout(rzT);rzT=setTimeout(fitUI,120)});
 addEventListener('orientationchange',function(){clearTimeout(rzT);rzT=setTimeout(fitUI,260)});
+var fhT=0;
+function updFH(){document.documentElement.style.setProperty('--f-h',Math.round($('f').offsetHeight)+'px')}
+if(typeof ResizeObserver!=='undefined'){
+  new ResizeObserver(function(){cancelAnimationFrame(fhT);fhT=requestAnimationFrame(updFH)}).observe($('f'));
+}
+updFH();

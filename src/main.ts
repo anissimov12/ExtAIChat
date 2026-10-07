@@ -43,21 +43,33 @@
     'ui/idle',
     'boot'
   ];
-  function load(name){
+  function loadAll(list){
     return new Promise(function(ok,fail){
-      var s=document.createElement("script");
-      s.src=base+name+".js";
-      s.onload=function(){ok()};
-      s.onerror=function(){fail(new Error("failed to load "+s.src))};
-      document.head.appendChild(s);
+      var left=list.length,failed=false;
+      if(!left)return ok();
+      list.forEach(function(name){
+        var s=document.createElement("script");
+        s.src=base+name+".js";
+        s.async=false;
+        s.onload=function(){if(--left===0&&!failed)ok()};
+        s.onerror=function(){if(!failed){failed=true;fail(new Error("failed to load "+base+name+".js"))}};
+        document.head.appendChild(s);
+      });
     });
   }
-  function seq(list){return list.reduce(function(p,n){return p.then(function(){return load(n)})},Promise.resolve())}
-  seq(PRE_UNLOCK)
+  function markReady(){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      if(typeof bootReveal==="function")bootReveal();
+      else document.body.classList.add("ready");
+    })});
+  }
+  loadAll(PRE_UNLOCK)
     .then(function(){return VAULT.open()})
-    .then(function(){return seq(APP)})
+    .then(function(){return loadAll(APP)})
+    .then(markReady)
     .catch(function(e){
       console.error("ExtAIChat:",e);
+      markReady();
       var d=document.createElement("div");
       d.style.cssText="padding:16px;font:14px sans-serif;color:#f66";
       d.textContent="ExtAIChat failed to start: "+(e&&e.message||e);

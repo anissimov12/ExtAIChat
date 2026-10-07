@@ -55,13 +55,17 @@ function err(t){
   c.msgs.push({role:'assistant',content:t,err:1});c.ts=Date.now();saveH();
   render();renderList();if(st)toBottom();
 }
-var welcomeReady=false,welcomeToken=0;
+var welcomeReady=false,welcomeToken=0,bootPend=false;
 function drawWelcome(){
-  var el=$('welcome'),text=String(S.hello==null?'Hello':S.hello).slice(0,80);
+  var el=$('welcome'),text=String(S.hello==null?"Let's start~":S.hello).slice(0,80);
   el.textContent='';
   Array.from(text).forEach(function(ch,i){
     var span=document.createElement('span');span.textContent=ch;span.style.animationDelay=(i*45)+'ms';el.appendChild(span);
   });
+}
+function bootReveal(){
+  if(bootPend){bootPend=false;drawWelcome()}
+  document.body.classList.add('ready');
 }
 function moveHomeForm(form,from,to){
   if(!form.animate||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -73,7 +77,7 @@ function moveHomeForm(form,from,to){
 function syncWelcome(c,instant){
   var mn=$('mn'),form=$('f'),hello=$('welcome'),empty=!c||!c.msgs||!c.msgs.length;
   var was=mn.classList.contains('welcome-mode');
-  if(!welcomeReady){mn.classList.toggle('welcome-mode',empty);if(empty)drawWelcome();welcomeReady=true;return}
+  if(!welcomeReady){welcomeReady=true;mn.classList.toggle('welcome-mode',empty);if(empty){if(document.body.classList.contains('ready'))drawWelcome();else bootPend=true}return}
   if(empty===was)return;
   if(instant){
     ++welcomeToken;

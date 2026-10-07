@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ExtAIChat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Extension AI Chat, with adding any API Endpoint (github.com/anissimov12/ExtAIChat)",
   "icons": {
     "48": "icon.svg",

@@ -8,9 +8,12 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <title>ExtAIChat</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<!-- defer: the three libraries and main.js run in document order before
+     DOMContentLoaded; deferring them keeps parsing/rendering unblocked -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;450;500&display=swap">
@@ -67,8 +70,8 @@
           <button class="btn" id="send" type="submit"></button>
         </div>
       </div>
+      <div id="pal"></div>
     </form>
-    <div id="pal"></div>
     </div>
     <div class="rz h" id="rlg" role="separator" aria-orientation="horizontal" tabindex="0" title="Drag to resize · click to open/close"></div>
     <section id="lg"><div class="sh"><b>Logs</b><button class="ghost" id="lc" type="button">Clear</button></div><div id="lgb"></div></section>
@@ -77,6 +80,6 @@
 <dialog id="dS"></dialog>
 <input type="file" id="fp" multiple hidden>
 <div id="dz"><span>Drop images or files</span></div>
-<script src="js/main.js"></script>
+<script defer src="js/main.js"></script>
 </body>
 </html>
