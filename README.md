@@ -22,7 +22,7 @@ The extension is designed for interaction with LLMs through open and commercial 
 - **Generation parameters.** Temperature, top-p, top-k, token limits, and response streaming are available. Unspecified parameters are not transmitted to the server.
 - **System prompt and profiles.** The system instruction is configured separately and may be saved as named presets for quick switching.
 - **Model selection.** The list of models is requested automatically from the connected service; search is performed as you type. The *thinking effort* is configured separately for models with corresponding support.
-- **Response formatting.** Markdown is supported, along with mathematical formulas (KaTeX) and sanitised embedded content (DOMPurify).
+- **Response formatting.** Markdown is supported, along with syntax highlighting of fenced code blocks (highlight.js, 36 languages), mathematical formulas (KaTeX), and sanitised embedded content (DOMPurify). All libraries are bundled inside the extension.
 - **File handling.** Images and files may be attached to a message via the file picker, clipboard paste, or drag-and-drop.
 - **Token accounting.** The interface displays the number of tokens sent and received within the current conversation.
 - **Conversation history.** Conversations are stored locally and remain available at any time; management is performed through the command palette (`/new`, `/chats`, `/model`, `/thinking`, `/clear`, and others).
@@ -46,7 +46,7 @@ Avalible **only** desktop version, mobile version in *beta*, because mobile fire
 
 ## Privacy
 
-The extension operates no servers of its own and transmits no data to third parties beyond the services the user explicitly addresses. All settings, access keys, and conversation history are stored **exclusively on the local device**. The data vault is encrypted (AES-GCM with a PBKDF2-derived key) and protected by a local passphrase. The application contains no external trackers; the third-party libraries employed are limited to markup processing and formula rendering.
+The extension operates no servers of its own and transmits no data to third parties beyond the services the user explicitly addresses. All settings, access keys, and conversation history are stored **exclusively on the local device**. The data vault is encrypted (AES-GCM with a PBKDF2-derived key) and protected by a local passphrase. The application contains no external trackers; the third-party libraries employed are limited to markup processing, code highlighting, and formula rendering.
 
 ## Installation
 

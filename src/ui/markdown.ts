@@ -15,6 +15,18 @@ function md(t){
   var h=marked.parse(t,{gfm:true,breaks:true});
   if(window.DOMPurify)h=DOMPurify.sanitize(h);
   h=h.replace(/<a /g,'<a target="_blank" rel="noopener noreferrer" ');
+  /* fenced blocks whose language hljs knows get token spans; auto-detection is
+     deliberately off - an unlabeled block must not switch language every frame */
+  if(window.hljs&&window.hljs.highlight)h=h.replace(/<pre><code class="language-([^"]*)">([\s\S]*?)<\/code><\/pre>/g,function(m,lang,code){
+    var l=lang.toLowerCase(),g=null;
+    try{g=window.hljs.getLanguage(l)}catch(e){}
+    if(!g)return m;
+    try{
+      var raw=code.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&');
+      var r=window.hljs.highlight(raw,{language:l,ignoreIllegals:true});
+      return '<pre><code class="language-'+lang+' hljs">'+r.value+'</code></pre>';
+    }catch(e){return m}
+  });
   return h.replace(/KTXPH(\d+)END/g,function(_,n){
     var x=M[n];if(!window.katex)return esc(x[0]);
     try{return katex.renderToString(x[0],{displayMode:x[1],throwOnError:false})}catch(e){return esc(x[0])}

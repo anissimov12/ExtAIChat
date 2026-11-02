@@ -155,8 +155,18 @@ header #st{flex:none}
 .m th,.m td{border:1px solid var(--line2);padding:2px 7px}
 .m img{max-width:100%}
 .m pre{padding:6px 8px;background:var(--code);border:1px solid var(--line);border-radius:5px;overflow-x:auto;font:12px/1.4 "IBM Plex Mono",ui-monospace,monospace}
-.m code{font:12px "IBM Plex Mono",ui-monospace,monospace;background:var(--code);padding:0 3px;border-radius:3px}
-.m pre code{background:none;padding:0}
+.m code{font:12px "IBM Plex Mono",ui-monospace,monospace;background:var(--code);padding:0 2px;border:1px solid var(--line);border-radius:3px}
+.m pre code{background:none;padding:0;border:0}
+/* fenced code tokens (highlight.js); unknown tokens keep the plain text color */
+.hljs-comment,.hljs-quote{color:#6a7382;font-style:italic}
+.hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-doctag,.hljs-template-tag,.hljs-name{color:#c678dd}
+.hljs-built_in,.hljs-type,.hljs-class,.hljs-title.class,.hljs-title.class.inherited{color:#e5c07b}
+.hljs-string,.hljs-regexp,.hljs-selector-id,.hljs-selector-class,.hljs-addition,.hljs-bullet,.hljs-link{color:#98c379}
+.hljs-number,.hljs-symbol,.hljs-attr,.hljs-attribute,.hljs-params{color:#d19a66}
+.hljs-function,.hljs-title,.hljs-title.function,.hljs-title.function.invoke,.hljs-section{color:#61afef}
+.hljs-variable,.hljs-variable.constant,.hljs-tag,.hljs-deletion,.hljs-property{color:#e06c75}
+.hljs-meta,.hljs-meta.prompt,.hljs-subst,.hljs-operator{color:#56b6c2}
+.hljs-emphasis{font-style:italic}
 .katex-display{overflow-x:auto;overflow-y:hidden;margin:6px 0}
 /* thinking block */
 .tk{margin:0 0 7px;border:1px solid var(--line);border-radius:6px;background:var(--code);overflow:hidden}

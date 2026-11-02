@@ -1,13 +1,13 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "ExtAIChat",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Extension AI Chat, with adding any API Endpoint (github.com/anissimov12/ExtAIChat)",
   "icons": {
     "48": "icon.svg",
     "96": "icon.svg"
   },
-  "browser_action": {
+  "action": {
     "default_title": "ExtAIChat",
     "default_icon": {
       "16": "icon.svg",
@@ -18,11 +18,21 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src https: http: ws: wss:; object-src 'self'",
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src https: http: ws: wss:; object-src 'self'"
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "extaichat@local",
-      "strict_min_version": "78.0"
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": ["technicalAndInteraction"]
+      }
     }
   }
 }
