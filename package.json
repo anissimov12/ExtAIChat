@@ -5,10 +5,15 @@
   "description": "ExtAIChat",
   "scripts": {
     "build": "node tools/build.mjs",
-    "watch": "tsc -p tsconfig.json --watch"
+    "watch": "tsc -p tsconfig.json --watch",
+    "start": "web-ext run",
+    "lint": "web-ext lint",
+    "pack": "web-ext build --overwrite-dest --ignore-files \"**/*.map\" \"tools/about.key.json\" \"TODO\" \"assets/**/*\" \"package.json\" \"package-lock.json\" \"tsconfig.json\""
   },
   "devDependencies": {
+    "addons-linter": "^10.15.0",
     "javascript-obfuscator": "^5.9.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "web-ext": "^10.2.0"
   }
 }

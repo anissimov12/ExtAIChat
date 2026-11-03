@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* tools/build.mjs
-   1. tsc: compiles everything under src/ into site/js/
-   2. obfuscate every .js file in site/js/ in place (config: .obfuscator.json)
+   1. tsc: compiles everything under src/ into js/ (repo root = the extension dir)
+   2. obfuscate every .js file in js/ in place (config: .obfuscator.json)
    3. re-add the copyright header tsc put on every file, since the
       obfuscator strips leading comments
    4. remove the stale .js.map files (source maps are useless - and would
@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 import JavaScriptObfuscator from 'javascript-obfuscator';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const siteJs = path.join(root, 'site', 'js');
+const jsDir = path.join(root, 'js');
 const obfConfig = path.join(root, '.obfuscator.json');
 
 const HEADER =
@@ -38,13 +38,13 @@ function collectJs(dir, out = []) {
   return out;
 }
 
-console.log('[build] src/ -> site/js/');
-fs.rmSync(siteJs, { recursive: true, force: true });
+console.log('[build] src/ -> js/');
+fs.rmSync(jsDir, { recursive: true, force: true });
 run('npx', ['tsc', '-p', 'tsconfig.json']);
 
-const jsFiles = collectJs(siteJs);
+const jsFiles = collectJs(jsDir);
 if (!jsFiles.length) {
-  console.error('[build] tsc produced no .js files in ' + siteJs);
+  console.error('[build] tsc produced no .js files in ' + jsDir);
   process.exit(1);
 }
 
@@ -62,8 +62,8 @@ for (const file of jsFiles.sort()) {
 }
 
 /* source maps are stale and would reveal pre-obfuscation code */
-for (const e of fs.readdirSync(siteJs, { recursive: true })) {
-  if (String(e).endsWith('.js.map')) fs.rmSync(path.join(siteJs, e), { force: true });
+for (const e of fs.readdirSync(jsDir, { recursive: true })) {
+  if (String(e).endsWith('.js.map')) fs.rmSync(path.join(jsDir, e), { force: true });
 }
 
 console.log('[build] done (' + jsFiles.length + ' files obfuscated)');

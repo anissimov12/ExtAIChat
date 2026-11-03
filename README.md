@@ -7,8 +7,8 @@
 **A Firefox extension for local AI chatting** *beta!!*
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-white.svg)](LICENSE)
-[![Browser: Firefox 78+](https://img.shields.io/badge/Browser-Firefox%2078%2B-orange)](#installation)
-[![Manifest V2](https://img.shields.io/badge/Manifest-V2-informational)](#installation)
+[![Browser: Firefox 142+](https://img.shields.io/badge/Browser-Firefox%20142%2B-orange)](#installation)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-informational)](#installation)
 
 </div>
 
@@ -57,24 +57,28 @@ npm install
 npm run build
 ```
 
-The assembled extension resides in the `site/` directory and is loaded into a Gecko-based browser (Firefox 78 or newer) as a temporary add-on via the debugging page (`about:debugging` -> *Load Temporary Add-on*).
+The repository **root** is the extension directory: `manifest.json` sits in the root next to `chat.html`, `background.js`, `css/`, `vendor/`, and the compiled `js/`. A built checkout can therefore be loaded by Firefox directly, without any extra folder:
+
+- **Temporary add-on:** open `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on…** → select the root `manifest.json`.
+- **One command (developer workflow):** `npm start` runs the extension in a clean Firefox profile via [web-ext](https://extensionworkshop.com/documentation/develop/web-ext-command-line-parameters/), watching for rebuilds. `npm run lint` lints the package the same way addons.mozilla.org does; `npm run pack` produces `web-ext-artifacts/extaichat-<version>.zip` ready for upload to AMO.
 
 *Support for Chromium-based browsers is planned.*
 
 <details>
 <summary>Step-by-step loading in Firefox</summary>
 
-1. Open `about:debugging#/runtime/this-firefox`.
-2. Click **Load Temporary Add-on…**
-3. Select the `site/manifest.json` file of the build.
-4. Open the extension via the toolbar icon.
+1. Run `npm install && npm run build` in the repository root.
+2. Open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on…**
+4. Select the `manifest.json` file in the repository root.
+5. Open the extension via the toolbar icon.
 
 </details>
 
 ## Requirements
 
 - Node.js with npm;
-- a Gecko-based browser with Manifest V2 support (Firefox 78+);
+- a Gecko-based browser with Manifest V3 support (Firefox 142+);
 - access to at least one compatible API service.
 
 ## Support

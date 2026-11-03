@@ -5,7 +5,7 @@
     "module": "ESNext",
     "moduleDetection": "legacy",
     "rootDir": "src",
-    "outDir": "site/js",
+    "outDir": "js",
     "alwaysStrict": true,
     "strict": false,
     "removeComments": false,

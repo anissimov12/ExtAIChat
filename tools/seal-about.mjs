@@ -10,7 +10,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
-const appPath=process.argv[2]||'js/app.js';
+const appPath=process.argv[2]||'js/core/about.js';
 const infoPath=process.argv[3]||path.join(here,'about.json');
 const keyPath=path.join(here,'about.key.json');
 const S=w.subtle, alg={name:'ECDSA',namedCurve:'P-256'}, sg={name:'ECDSA',hash:'SHA-256'};

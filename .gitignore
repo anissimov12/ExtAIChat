@@ -3,8 +3,9 @@ node*
 _old_root
 
 # artifacts
-site/js/
-site/ext.zip
+js/
+*.zip
+/web-ext-artifacts/
 
 # private
 tools/about.key.json
