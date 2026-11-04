@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "addons-linter": "^10.15.0",
-    "javascript-obfuscator": "^5.9.0",
     "typescript": "^7.0.2",
     "web-ext": "^10.2.0"
   }

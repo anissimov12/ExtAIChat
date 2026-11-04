@@ -31,7 +31,9 @@ jobs:
       - name: Pack site.zip
         run: |
           rm -f site.zip
-          zip -r site.zip site
+          zip -r site.zip \
+            manifest.json background.js chat.html icon.svg \
+            css js vendor
 
       - name: Compute checksums
         run: |
